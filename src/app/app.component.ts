@@ -1,5 +1,4 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -8,6 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
+import { SurveyService } from './survey.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,7 +25,7 @@ export class AppComponent implements OnInit {
   pickedCanteenFoods: string[] = [];
   pickedOrderingFoods: string[] = [];
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {}
+  constructor(private fb: FormBuilder, private surveyService: SurveyService) {}
 
   ngOnInit(): void {
     this.initializeGoogleSheet();
@@ -203,6 +204,18 @@ export class AppComponent implements OnInit {
       console.log(
         'Submiting...' + JSON.stringify(this.forthFormGroup.getRawValue())
       );
+
+      console.log('calling save method...');
+      this.surveyService.pushRecord('dinner', {
+        user: 'joney@gmail.com',
+        food: 'Fried Rice',
+        price: 38,
+        receivedTime: '2.00 PM',
+      });
+      this.surveyService.pushRecord('comment', {
+        user: 'joney@gmail.com',
+        comment: 'test comment',
+      });
     }
   }
 
