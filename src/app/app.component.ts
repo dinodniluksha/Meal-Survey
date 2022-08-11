@@ -204,8 +204,7 @@ export class AppComponent implements OnInit {
       console.log(
         'Submiting...' + JSON.stringify(this.forthFormGroup.getRawValue())
       );
-
-      console.log('calling save method...');
+      //saving data in firebase
       this.surveyService.pushRecord('dinner', {
         user: 'joney@gmail.com',
         food: 'Fried Rice',
