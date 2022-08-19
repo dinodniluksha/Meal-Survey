@@ -1,20 +1,23 @@
 <mat-stepper orientation="vertical" [linear]="true" #stepper
   style="width: 80%; margin: auto; background-color: rgba(251, 238, 238, 0.932);">
+
+  <!-- begin of Breakfast section of UI -->
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template matStepLabel>
         <div class="stepper-label">Breakfast</div>
       </ng-template>
 
-      <div [formGroup]="mealFrom">
+      <div [formGroup]="breakfastMealFrom">
         <hr class="solid">
         <label class="title">Meal From</label>
         <section class="example-radio-group">
-          <mat-checkbox formControlName="boarding" (change)="handleChange($event)" value="boarding"
+          <mat-checkbox formControlName="boarding" (change)="selectBreakfastOptions($event)" value="boarding"
             style="margin: 5px;">Boarding</mat-checkbox>
-          <mat-checkbox formControlName="canteen" (change)="handleChange($event)" value="canteen" style="margin: 5px;">
+          <mat-checkbox formControlName="canteen" (change)="selectBreakfastOptions($event)" value="canteen"
+            style="margin: 5px;">
             Canteen</mat-checkbox>
-          <mat-checkbox formControlName="ordering" (change)="handleChange($event)" value="ordering"
+          <mat-checkbox formControlName="ordering" (change)="selectBreakfastOptions($event)" value="ordering"
             style="margin: 5px;">Ordering</mat-checkbox>
           <mat-error>
             <span *ngIf="firstFormGroup.controls.mealFrom.errors">
@@ -23,15 +26,15 @@
           </mat-error>
         </section>
       </div>
-      <div *ngIf="!mealsFromBording">
+      <div *ngIf="!breakfastMealsFromBording">
 
-        <div *ngIf="isCanteenFoods">
+        <div *ngIf="isCanteenBreakfastFoods">
           <hr class="solid">
           <label class="title">Meal Peferences - Canteen</label>
           <br>
           <br>
-          <div *ngFor="let food of canteenFoods">
-            <mat-checkbox (change)="showCanteenOptions($event)" value="{{food}}" required>{{food}}</mat-checkbox>
+          <div *ngFor="let food of canteenBreakfastFoods">
+            <mat-checkbox (change)="pickCanteenBreakfastFoods($event)" value="{{food}}" required>{{food}}</mat-checkbox>
           </div>
           <mat-error>
             <span *ngIf="firstFormGroup.controls.pickedCanteenFoods.errors">
@@ -40,8 +43,10 @@
           </mat-error>
           <br>
           <div formGroupName="canteen">
-            <div *ngFor="let pickedFood of pickedCanteenFoods;">
-              <p>{{pickedFood}} : Rs <input placeholder="150.00" [formControlName]="pickedFood" />
+            <div *ngFor="let pickedFood of pickedCanteenBreakfastFoods;">
+              <p>{{pickedFood}} : Rs <input type="text"
+                  onkeyup="this.value=this.value.replace(/^[\d]*[^\d]+|^0\d+/, '')" placeholder="150"
+                  [formControlName]="pickedFood" />
                 <br>
                 <mat-error>
                   <span *ngIf="firstFormGroup.controls.canteen.get(pickedFood)?.errors?.required">
@@ -59,13 +64,14 @@
           <br>
         </div>
 
-        <div *ngIf="isOrderingFoods">
+        <div *ngIf="isOrderingBreakfastFoods">
           <hr class="solid">
           <label class="title">Meal Peferences - Ordering</label>
           <br>
           <br>
-          <div *ngFor="let food of orderingFoods">
-            <mat-checkbox (change)="showOrderingOptions($event)" value="{{food}}" required>{{food}}</mat-checkbox>
+          <div *ngFor="let food of orderingBreakfastFoods">
+            <mat-checkbox (change)="pickOrderingBreakfastFoods($event)" value="{{food}}" required>{{food}}
+            </mat-checkbox>
           </div>
           <mat-error>
             <span *ngIf="firstFormGroup.controls.pickedOrderingFoods.errors">
@@ -74,8 +80,10 @@
           </mat-error>
           <br>
           <div formGroupName="ordering">
-            <div *ngFor="let pickedFood of pickedOrderingFoods;">
-              <p>{{pickedFood}} : Rs <input placeholder="150.00" [formControlName]="pickedFood" />
+            <div *ngFor="let pickedFood of pickedOrderingBreakfastFoods;">
+              <p>{{pickedFood}} : Rs <input type="text"
+                  onkeyup="this.value=this.value.replace(/^[\d]*[^\d]+|^0\d+/, '')" placeholder="150"
+                  [formControlName]="pickedFood" />
                 <br>
                 <mat-error>
                   <span *ngIf="firstFormGroup.controls.ordering.get(pickedFood)?.errors?.required">
@@ -92,7 +100,7 @@
           </div>
           <br>
           <p>
-            Collecting time : 
+            Collecting time :
             <input type="time" placeholder="7.00 AM" formControlName="collectingTime" />
             <br>
             <mat-error>
@@ -111,16 +119,119 @@
       </div>
     </form>
   </mat-step>
+
+  <!-- begin of Lunch section of UI -->
   <mat-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup">
       <ng-template matStepLabel>
         <div class="stepper-label">Lunch</div>
       </ng-template>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Meal From</mat-label>
-        <input matInput formControlName="mealFrom" placeholder="Ex. 1 Main St, New York, NY" required />
-      </mat-form-field>
+      <div [formGroup]="lunchMealFrom">
+        <hr class="solid">
+        <label class="title">Meal From</label>
+        <section class="example-radio-group">
+          <mat-checkbox formControlName="boarding" (change)="selectLunchOptions($event)" value="boarding"
+            style="margin: 5px;">
+            Boarding</mat-checkbox>
+          <mat-checkbox formControlName="canteen" (change)="selectLunchOptions($event)" value="canteen"
+            style="margin: 5px;">
+            Canteen</mat-checkbox>
+          <mat-checkbox formControlName="ordering" (change)="selectLunchOptions($event)" value="ordering"
+            style="margin: 5px;">
+            Ordering</mat-checkbox>
+          <mat-error>
+            <span *ngIf="secondFormGroup.controls.mealFrom.errors">
+              At least one should be selected
+            </span>
+          </mat-error>
+        </section>
+      </div>
+      <div *ngIf="!lunchMealsFromBording">
+
+        <div *ngIf="isCanteenLunchFoods">
+          <hr class="solid">
+          <label class="title">Meal Peferences - Canteen</label>
+          <br>
+          <br>
+          <div *ngFor="let food of canteenLunchFoods">
+            <mat-checkbox (change)="pickCanteenLunchFoods($event)" value="{{food}}" required>{{food}}</mat-checkbox>
+          </div>
+          <mat-error>
+            <span *ngIf="secondFormGroup.controls.pickedCanteenFoods.errors">
+              At least one food item should be selected
+            </span>
+          </mat-error>
+          <br>
+          <div formGroupName="canteen">
+            <div *ngFor="let pickedFood of pickedCanteenLunchFoods;">
+              <p>{{pickedFood}} : Rs <input type="text"
+                  onkeyup="this.value=this.value.replace(/^[\d]*[^\d]+|^0\d+/, '')" placeholder="150"
+                  [formControlName]="pickedFood" />
+                <br>
+                <mat-error>
+                  <span *ngIf="secondFormGroup.controls.canteen.get(pickedFood)?.errors?.required">
+                    Please enter {{pickedFood}}'s price
+                  </span>
+                </mat-error>
+                <mat-error>
+                  <span *ngIf="(secondFormGroup.controls.canteen.get(pickedFood)?.errors?.pattern)">
+                    Price should be numeric
+                  </span>
+                </mat-error>
+              </p>
+            </div>
+          </div>
+          <br>
+        </div>
+
+        <div *ngIf="isOrderingLunchFoods">
+          <hr class="solid">
+          <label class="title">Meal Peferences - Ordering</label>
+          <br>
+          <br>
+          <div *ngFor="let food of orderingLunchFoods">
+            <mat-checkbox (change)="pickOrderingLunchFoods($event)" value="{{food}}" required>{{food}}</mat-checkbox>
+          </div>
+          <mat-error>
+            <span *ngIf="secondFormGroup.controls.pickedOrderingFoods.errors">
+              At least one food item should be selected
+            </span>
+          </mat-error>
+          <br>
+          <div formGroupName="ordering">
+            <div *ngFor="let pickedFood of pickedOrderingLunchFoods;">
+              <p>{{pickedFood}} : Rs <input type="text"
+                  onkeyup="this.value=this.value.replace(/^[\d]*[^\d]+|^0\d+/, '')" placeholder="150"
+                  [formControlName]="pickedFood" />
+                <br>
+                <mat-error>
+                  <span *ngIf="secondFormGroup.controls.ordering.get(pickedFood)?.errors?.required">
+                    Please enter {{pickedFood}}'s price
+                  </span>
+                </mat-error>
+                <mat-error>
+                  <span *ngIf="(secondFormGroup.controls.ordering.get(pickedFood)?.errors?.pattern)">
+                    Price should be numeric
+                  </span>
+                </mat-error>
+              </p>
+            </div>
+          </div>
+          <br>
+          <p>
+            Collecting time :
+            <input type="time" placeholder="7.00 AM" formControlName="collectingTime" />
+            <br>
+            <mat-error>
+              <span *ngIf="secondFormGroup.controls.collectingTime.errors">
+                Please enter time
+              </span>
+            </mat-error>
+          </p>
+        </div>
+      </div>
+
       <div class="button-rack">
         <button mat-flat-button color="accent" matStepperPrevious>Back</button>
         <button mat-flat-button color="primary" (click)="secondNext(stepper)">
@@ -130,16 +241,118 @@
     </form>
   </mat-step>
 
+  <!-- begin of Dinner section of UI -->
   <mat-step [stepControl]="thirdFormGroup">
     <form [formGroup]="thirdFormGroup">
       <ng-template matStepLabel>
         <div class="stepper-label">Dinner</div>
       </ng-template>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Meal From</mat-label>
-        <input matInput formControlName="mealFrom" placeholder="Ex. 1 Main St, New York, NY" required />
-      </mat-form-field>
+      <div [formGroup]="dinnerMealFrom">
+        <hr class="solid">
+        <label class="title">Meal From</label>
+        <section class="example-radio-group">
+          <mat-checkbox formControlName="boarding" (change)="selectDinnerOptions($event)" value="boarding"
+            style="margin: 5px;">
+            Boarding</mat-checkbox>
+          <mat-checkbox formControlName="canteen" (change)="selectDinnerOptions($event)" value="canteen"
+            style="margin: 5px;">
+            Canteen</mat-checkbox>
+          <mat-checkbox formControlName="ordering" (change)="selectDinnerOptions($event)" value="ordering"
+            style="margin: 5px;">
+            Ordering</mat-checkbox>
+          <mat-error>
+            <span *ngIf="thirdFormGroup.controls.mealFrom.errors">
+              At least one should be selected
+            </span>
+          </mat-error>
+        </section>
+      </div>
+      <div *ngIf="!dinnerMealsFromBording">
+
+        <div *ngIf="isCanteenDinnerFoods">
+          <hr class="solid">
+          <label class="title">Meal Peferences - Canteen</label>
+          <br>
+          <br>
+          <div *ngFor="let food of canteenDinnerFoods">
+            <mat-checkbox (change)="pickCanteenDinnerFoods($event)" value="{{food}}" required>{{food}}</mat-checkbox>
+          </div>
+          <mat-error>
+            <span *ngIf="thirdFormGroup.controls.pickedCanteenFoods.errors">
+              At least one food item should be selected
+            </span>
+          </mat-error>
+          <br>
+          <div formGroupName="canteen">
+            <div *ngFor="let pickedFood of pickedCanteenDinnerFoods;">
+              <p>{{pickedFood}} : Rs <input type="text"
+                  onkeyup="this.value=this.value.replace(/^[\d]*[^\d]+|^0\d+/, '')" placeholder="150"
+                  [formControlName]="pickedFood" />
+                <br>
+                <mat-error>
+                  <span *ngIf="thirdFormGroup.controls.canteen.get(pickedFood)?.errors?.required">
+                    Please enter {{pickedFood}}'s price
+                  </span>
+                </mat-error>
+                <mat-error>
+                  <span *ngIf="(thirdFormGroup.controls.canteen.get(pickedFood)?.errors?.pattern)">
+                    Price should be numeric
+                  </span>
+                </mat-error>
+              </p>
+            </div>
+          </div>
+          <br>
+        </div>
+
+        <div *ngIf="isOrderingDinnerFoods">
+          <hr class="solid">
+          <label class="title">Meal Peferences - Ordering</label>
+          <br>
+          <br>
+          <div *ngFor="let food of orderingDinnerFoods">
+            <mat-checkbox (change)="pickOrderingDinnerFoods($event)" value="{{food}}" required>{{food}}</mat-checkbox>
+          </div>
+          <mat-error>
+            <span *ngIf="thirdFormGroup.controls.pickedOrderingFoods.errors">
+              At least one food item should be selected
+            </span>
+          </mat-error>
+          <br>
+          <div formGroupName="ordering">
+            <div *ngFor="let pickedFood of pickedOrderingDinnerFoods;">
+              <p>{{pickedFood}} : Rs <input type="text"
+                  onkeyup="this.value=this.value.replace(/^[\d]*[^\d]+|^0\d+/, '')" placeholder="150"
+                  [formControlName]="pickedFood" />
+                <br>
+                <mat-error>
+                  <span *ngIf="thirdFormGroup.controls.ordering.get(pickedFood)?.errors?.required">
+                    Please enter {{pickedFood}}'s price
+                  </span>
+                </mat-error>
+                <mat-error>
+                  <span *ngIf="(thirdFormGroup.controls.ordering.get(pickedFood)?.errors?.pattern)">
+                    Price should be numeric
+                  </span>
+                </mat-error>
+              </p>
+            </div>
+          </div>
+          <br>
+          <p>
+            Collecting time :
+            <input type="time" placeholder="7.00 AM" formControlName="collectingTime" />
+            <br>
+            <mat-error>
+              <span *ngIf="thirdFormGroup.controls.collectingTime.errors">
+                Please enter time
+              </span>
+            </mat-error>
+          </p>
+        </div>
+      </div>
+
       <div class="button-rack">
         <button mat-flat-button color="accent" matStepperPrevious>Back</button>
         <button mat-flat-button color="primary" (click)="thirdNext(stepper)">
@@ -149,20 +362,32 @@
     </form>
   </mat-step>
 
+  <!-- begin of Comment & Suggestion section of UI -->
   <mat-step [stepControl]="forthFormGroup" c>
     <form [formGroup]="forthFormGroup">
       <ng-template matStepLabel>
         <div class="stepper-label">Comment & Suggestion</div>
       </ng-template>
 
-      <mat-form-field appearance="fill">
+      <div class="last-section">
         <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email" placeholder="example@gmail.com" required />
-      </mat-form-field>
-      <mat-form-field appearance="fill">
+        <input type=text class="email-slot" placeholder="example@gmail.com" formControlName="email" />
+        <mat-error>
+          <span *ngIf="forthFormGroup.controls.email.errors?.required">
+            Please enter valid gmail address
+          </span>
+        </mat-error>
+        <mat-error>
+          <span *ngIf="forthFormGroup.controls.email.errors?.pattern">
+            Email pattern should be like example@gmail.com
+          </span>
+        </mat-error>
+        <br>
         <mat-label>Your feadback/ideas</mat-label>
-        <input matInput formControlName="comment" placeholder="Ex. 1 Main St, New York, NY" required />
-      </mat-form-field>
+        <textarea formControlName="comment" class="comment-slot" placeholder="Comment" required></textarea>
+        <br>
+      </div>
+
       <div class="button-rack">
         <button mat-flat-button color="accent" matStepperPrevious>Back</button>
         <button mat-flat-button style="background-color:purple; color: white;" (click)="submit()">
