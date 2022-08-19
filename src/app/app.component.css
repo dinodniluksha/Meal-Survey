@@ -1,0 +1,83 @@
+.mat-stepper-vertical {
+    margin-top: 8px;
+}
+
+.mat-form-field {
+    margin-top: 16px;
+}
+
+
+.stepper-label {
+    padding: 10px 0;
+    color: black;
+    font-size: x-large;
+    font-weight: 500;
+}
+
+.mat-step {
+    background-color: rgb(136, 127, 255);
+}
+
+.button-rack {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.next-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.example-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-color: black;
+}
+
+.example-radio-button {
+    margin: 5px
+}
+
+.peferences-title {
+    text-decoration: underline;
+}
+
+hr.solid {
+    border-top: 3px solid #bbb;
+}
+
+.mat-error {
+    font-size: small;
+}
+
+.title{
+    font-size: large;
+    font-weight: 500;
+}
+
+.last-section {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+input,
+textarea {
+    width: 90px;
+    padding: 3px;
+    font-family: 'Roboto';
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.email-slot,.comment-slot{
+    width: 100%;
+    padding: 5px;
+    border: 2px solid #ccc;
+}
