@@ -16,6 +16,7 @@ import { SurveyService } from './survey.service';
 })
 export class AppComponent implements OnInit {
   title = 'meals-survey';
+  isFirstPage: boolean = true;
 
   //breakfast secion
   breakfastMealsFromBording = true;
@@ -153,6 +154,10 @@ export class AppComponent implements OnInit {
     if (this.thirdFormGroup.valid) {
       stepper.next();
     }
+  }
+
+  firstPageChange() {
+    this.isFirstPage = !this.isFirstPage;
   }
 
   //begin of breakfast form's mechanism

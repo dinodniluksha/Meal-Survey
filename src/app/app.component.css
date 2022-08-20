@@ -1,3 +1,28 @@
+.top-bar {
+    display: flex;
+    align-items: center;
+    height: 10%;
+    width: 80%;
+    background-color: purple;
+    margin: auto;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.action-section {
+    font-size: large;
+    color: white;
+    padding: 200;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 50%;
+    width: 50%;
+    position: relative;
+    margin-left: 10px;
+}
+
 .mat-stepper-vertical {
     margin-top: 8px;
 }
