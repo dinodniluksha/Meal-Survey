@@ -18,9 +18,10 @@ import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { FormStartComponent } from './form-start/form-start.component';
+import { FormEndComponent } from './form-end/form-end.component';
 
 @NgModule({
-  declarations: [AppComponent, FormStartComponent],
+  declarations: [AppComponent, FormStartComponent, FormEndComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,

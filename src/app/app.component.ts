@@ -17,6 +17,7 @@ import { SurveyService } from './survey.service';
 export class AppComponent implements OnInit {
   title = 'meals-survey';
   isFirstPage: boolean = true;
+  isEndPage: boolean = false;
 
   //breakfast secion
   breakfastMealsFromBording = true;
@@ -535,6 +536,7 @@ export class AppComponent implements OnInit {
       //   user: 'joney@gmail.com',
       //   comment: 'test comment',
       // });
+      this.isEndPage = true;
     }
   }
 

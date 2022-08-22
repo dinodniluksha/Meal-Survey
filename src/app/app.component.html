@@ -1,19 +1,18 @@
-<div class="top-bar">
+<div *ngIf="!isEndPage" class="top-bar">
   <div class="action-section" (click)="firstPageChange()">
     <mat-icon *ngIf="!isFirstPage">keyboard_arrow_left</mat-icon>
     <span>{{isFirstPage ? 'Go to Form' : 'Guideline'}}</span>
     <mat-icon *ngIf="isFirstPage">keyboard_arrow_right</mat-icon>
   </div>
 </div>
-
+<!-- Start page-->
 <div *ngIf="isFirstPage">
   <app-form-start></app-form-start>
 </div>
-
-<div *ngIf="!isFirstPage">
+<!-- Form page-->
+<div [hidden]="isEndPage" *ngIf="!isFirstPage">
   <mat-stepper orientation="vertical" [linear]="true" #stepper
     style="width: 80%; margin: auto; background-color: rgba(251, 238, 238, 0.932);">
-
     <!-- begin of Breakfast section of UI -->
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
@@ -380,7 +379,7 @@
     <mat-step [stepControl]="forthFormGroup" c>
       <form [formGroup]="forthFormGroup">
         <ng-template matStepLabel>
-          <div class="stepper-label">Comment & Suggestion</div>
+          <div class="stepper-label">Feedback</div>
         </ng-template>
 
         <div class="last-section">
@@ -397,8 +396,8 @@
             </span>
           </mat-error>
           <br>
-          <mat-label>Your feadback/ideas</mat-label>
-          <textarea formControlName="comment" class="comment-slot" placeholder="Comment" required></textarea>
+          <mat-label>Your feedback/ideas</mat-label>
+          <textarea formControlName="comment" class="comment-slot" placeholder="Comment"></textarea>
           <br>
         </div>
 
@@ -411,4 +410,8 @@
       </form>
     </mat-step>
   </mat-stepper>
+</div>
+<!-- End page-->
+<div *ngIf="isEndPage">
+  <app-form-end></app-form-end>
 </div>
