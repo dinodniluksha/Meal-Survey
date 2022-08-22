@@ -19,6 +19,7 @@
 }
 
 .center {
+    background-image: url("/assets/green-success-tick.PNG");
     display: block;
     margin-left: auto;
     margin-right: auto;
